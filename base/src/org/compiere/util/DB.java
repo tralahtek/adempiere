@@ -37,6 +37,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 
@@ -1483,6 +1484,8 @@ public final class DB
 			} else {
 				uuid = DB.getSQLValueString(trxName, "SELECT getUUID()");
 			}
+		} else {
+			uuid = UUID.randomUUID().toString();
 		}
 		return uuid;
 	}
@@ -2583,4 +2586,15 @@ public final class DB
 		}
 		return false;
 	}
+
+    /**
+     * Get the current time from the database
+     * @return a timestamp of the current database time
+     */
+    public static Timestamp getCurrentTimeFromDatabase() {
+
+        return DB.getSQLValueTS(null,
+                "SELECT getdate() FROM DUAL");
+
+    }
 }	//	DB

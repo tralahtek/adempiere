@@ -717,6 +717,10 @@ public class MTree extends X_AD_Tree
 				&& whereClause.length() > 0)
 			sql.append(" AND ").append(whereClause);
 		//	End Yamel Senih
+		
+		//suppress duplicated items
+		sql.append(" GROUP BY tn.Node_ID,tn.Parent_ID,tn.SeqNo,tb.IsActive ");
+				
 		sql.append(" ORDER BY COALESCE(tn.Parent_ID, -1), tn.SeqNo");
 		log.finest(sql.toString());
 		//  The Node Loop
@@ -1171,7 +1175,7 @@ public class MTree extends X_AD_Tree
 		while (needsTrim)
 		{
 			needsTrim = false;
-			Enumeration<MTreeNode> en = rootNode.preorderEnumeration();
+			Enumeration en = rootNode.preorderEnumeration();
 			while (rootNode.getChildCount() > 0 && en.hasMoreElements())
 			{
 				MTreeNode nd = (MTreeNode)en.nextElement();

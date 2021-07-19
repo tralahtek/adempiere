@@ -1502,8 +1502,7 @@ public abstract class AbstractADWindowPanel extends AbstractUIPart implements To
         if (!autoSave()) {
         	return;
         }
-
-		currentTab.setQuery(null);	//	reset previous queries
+        
 		MRole role = MRole.getDefault();
 		int maxRows = role.getMaxQueryRecords();
 		currentTab.query(m_onlyCurrentRows, 0, maxRows);
@@ -1913,10 +1912,8 @@ public abstract class AbstractADWindowPanel extends AbstractUIPart implements To
 			int record_ID = currentTab.getRecord_ID();
 			if (record_ID <= 0)
 				return;
-			//	
-			if(processAction == null) {
-				processAction = new WProcessAction(this);
-			}
+			// Is necessary reload for each record to apply the display rules
+			processAction = new WProcessAction(this);
 			processAction.openOption(toolbar.getEvent().getTarget());			
 		}
 	}
